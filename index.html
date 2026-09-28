@@ -100,6 +100,12 @@ ol.pubs li:first-child{padding-top:0}
 .tag{font-family:var(--f-mono);font-size:.75rem;padding:.2rem .55rem;border:1px solid var(--line);border-radius:4px;text-decoration:none;color:var(--muted)}
 a.tag:hover{border-color:var(--left);color:var(--left)}
 .more{margin-top:var(--s3);font-size:.95rem}
+.authors{font-size:.95rem;margin:0 0 .15rem}
+.authors b{font-weight:600}
+.kicker.sub{margin-top:var(--s4);margin-bottom:var(--s2)}
+ul.prep{margin:0;padding-left:1.1rem;display:grid;gap:.5rem;font-size:.98rem}
+ul.prep li{max-width:65ch}
+.prep-note{font-size:.9rem;margin:.6rem 0 0}
 
 /* teaching */
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4)}
@@ -144,10 +150,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
       <div>
         <span class="status"><i></i>Open to postdoctoral positions</span>
         <h1>Abhishek Rout</h1>
-        <p class="role">Theoretical physicist · Ph.D., Department of Physics and Astronomy, University of South Carolina</p>
+        <p class="role">Theoretical physicist · Ph.D. in Physics, University of South Carolina (2025)</p>
         <p class="lede">I study how gravity behaves in its most extreme regimes, where our understanding of spacetime starts to break down. My current focus is <em>parity violation</em> in gravity and the signatures it leaves on black holes, gravitational waves and the early universe.</p>
         <div class="actions">
-          <a class="btn primary" href="https://drive.google.com/file/d/1Bs3MycASZ9uJEFoFOm81NeZm62psLpez/view?usp=sharing" target="_blank" rel="noopener">Curriculum vitae ↗</a>
+          <a class="btn primary" href="Rout_Abhishek_CV.pdf" target="_blank" rel="noopener">Curriculum vitae (PDF)</a>
           <a class="btn" href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
           <a class="btn" href="https://orcid.org/0009-0009-1118-1007" target="_blank" rel="noopener">ORCID</a>
         </div>
@@ -189,7 +195,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
           <div class="theme">
             <span class="sym">δg<sub>μν</sub></span>
             <h3>Black hole perturbation theory</h3>
-            <p>Axial and polar perturbations of charged and rotating black holes in modified gravity backgrounds.</p>
+            <p>Axial perturbations, quasinormal modes and isospectrality breaking of charged and rotating black holes in dynamical Chern–Simons gravity.</p>
           </div>
           <div class="theme">
             <span class="sym">⟨0|T<sub>μν</sub>|0⟩</span>
@@ -199,7 +205,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
           <div class="theme">
             <span class="sym">h<sub>L</sub> ≠ h<sub>R</sub></span>
             <h3>Gravitational-wave phenomenology</h3>
-            <p>Observable signatures of parity violation, such as birefringence in primordial and astrophysical gravitational waves.</p>
+            <p>Observable signatures of parity violation: birefringence of primordial gravitational waves and parity-violating strain from pulsar glitches.</p>
           </div>
         </div>
       </div>
@@ -210,7 +216,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
     <div class="wrap sec-head">
       <div>
         <p class="kicker">Publications</p>
-        <h2>Peer-reviewed papers</h2>
+        <h2>Papers and preprints</h2>
       </div>
       <div>
         <ol class="pubs">
@@ -218,6 +224,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
             <span class="year">2026</span>
             <div>
               <h3>Primordial Gravitational Wave Birefringence in a de Sitter Background with Chern–Simons Coupling</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
               <p class="venue"><em>Universe</em> 12, 6</p>
               <p class="pub-sum">How a Chern–Simons coupling affects tensor modes in the early universe, predicting a birefringence in which the two circular polarizations evolve differently.</p>
               <div class="tags">
@@ -230,6 +237,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
             <span class="year">2026</span>
             <div>
               <h3>First-Order Axial Perturbation of the Reissner–Nordström Metric in a Possible Chern–Simons Gravity Background</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
               <p class="venue"><em>Symmetry</em> 18, 560</p>
               <p class="pub-sum">How a charged black hole responds to axial perturbations within Chern–Simons gravity.</p>
               <div class="tags">
@@ -241,6 +249,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
             <span class="year">2024</span>
             <div>
               <h3>Bound States and Particle Production by Breather-Type Background Field Configurations</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
               <p class="venue"><em>Symmetry</em> 16, 1571</p>
               <p class="pub-sum">Bound states and particle creation in oscillating field configurations known as breathers.</p>
               <div class="tags">
@@ -249,7 +258,28 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
             </div>
           </li>
         </ol>
-        <p class="more muted">Full list: <a href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="https://drive.google.com/file/d/1FKBHvwcjT-sof6gVXj5icdmKwZ4ipz3U/view?usp=drive_link" target="_blank" rel="noopener">publication list (PDF)</a> · <a href="https://www.researchgate.net/profile/Abhishek-Rout-4/publications" target="_blank" rel="noopener">ResearchGate</a></p>
+        <p class="kicker sub">Preprints</p>
+        <ol class="pubs">
+          <li>
+            <span class="year">2026</span>
+            <div>
+              <h3>Gravitational Wave Parity-Violating Strain from Pulsar Glitches in Chern–Simons Modified Gravity</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
+              <p class="venue">Submitted to <em>Physical Review D</em></p>
+              <div class="tags">
+                <a class="tag" href="https://arxiv.org/abs/2608.24002" target="_blank" rel="noopener">arXiv:2608.24002</a>
+              </div>
+            </div>
+          </li>
+        </ol>
+        <p class="kicker sub">In preparation</p>
+        <ul class="prep">
+          <li>Mixed-order parity-violating corrections to rotating black holes in combined scalar–Gauss–Bonnet and dynamical Chern–Simons gravity</li>
+          <li>Isospectrality breaking in the axial quasinormal modes of Reissner–Nordström black holes in dynamical Chern–Simons gravity</li>
+          <li>Rotation-induced isospectrality breaking of charged black holes in dynamical Chern–Simons gravity</li>
+        </ul>
+        <p class="prep-note muted">All with B. Altschul.</p>
+        <p class="more muted">Full list: <a href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="Rout_Abhishek_Publications.pdf" target="_blank" rel="noopener">publication list (PDF)</a> · <a href="https://www.researchgate.net/profile/Abhishek-Rout-4/publications" target="_blank" rel="noopener">ResearchGate</a></p>
       </div>
     </div>
   </section>
@@ -276,11 +306,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
           <p class="kicker">Outreach &amp; professional</p>
           <dl class="items">
             <dt>Outreach</dt>
-            <dd>Interactive demonstrations of mechanics, wave optics and astronomy for high-school students, and local school STEM initiatives.</dd>
+            <dd>Designed and ran interactive demonstration workshops on mechanics, wave optics and astronomy for high-school students, IISER Kolkata and local schools (2015–2019).</dd>
             <dt>Refereeing</dt>
-            <dd>Co-referee for <em>Classical and Quantum Gravity</em>.</dd>
+            <dd>Co-referee, with Prof. Brett Altschul, for journal articles in classical and quantum gravity.</dd>
             <dt>Honours</dt>
-            <dd>Selected for the DST Science Awareness Camp at NIST Berhampur, one of the top 50 students nationally.</dd>
+            <dd>INSPIRE Fellow, Department of Science and Technology, Government of India (2014–2019). Selected for the DST Science Awareness Camp at NIST Berhampur, one of the top 50 students nationally.</dd>
+            <dt>Talks</dt>
+            <dd>Contributed talk, IUCSS Workshop on Theoretical Aspects of the Standard-Model Extension and Modified Gravity, Indiana University (2024). Seminar speaker, USC Theoretical Physics Group (2023–2025).</dd>
             <dt>Tools</dt>
             <dd>
               <div class="chips">
