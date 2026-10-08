@@ -1,0 +1,859 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Abhishek Rout, theoretical physicist: Chern–Simons gravity, black hole perturbations, QFT in curved spacetime, gravitational waves.">
+<title>Abhishek Rout — Physics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: left-aligned single column (max ~68rem), sticky nav with theme toggle; hero = statement + live GW ring figure over a warpable spacetime grid; then ruled sections */
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --fg:#151A22; --muted:#5A6472; --line:#D8DDE3;
+  --left:#1E6A86;   /* left-handed mode, polar sector, primary accent */
+  --right:#B0425A;  /* right-handed mode, axial sector */
+  --grid:rgba(21,26,34,.07); --gridwarp:rgba(30,106,134,.22);
+  --f-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem; --s5:4rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1117; --surface:#151A22; --fg:#E3E7ED; --muted:#98A2B0; --line:#262D38;
+  --left:#62C1DA; --right:#E27C91; --grid:rgba(227,231,237,.06); --gridwarp:rgba(98,193,218,.25); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0E1117; --surface:#151A22; --fg:#E3E7ED; --muted:#98A2B0; --line:#262D38;
+  --left:#62C1DA; --right:#E27C91; --grid:rgba(227,231,237,.06); --gridwarp:rgba(98,193,218,.25); color-scheme:dark }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:1.0625rem;line-height:1.6;margin:0}
+a{color:inherit;text-decoration-color:color-mix(in srgb,var(--left) 60%,transparent);text-underline-offset:3px}
+a:hover{color:var(--left)}
+:focus-visible{outline:2px solid var(--left);outline-offset:3px;border-radius:3px}
+.wrap{max-width:68rem;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+button{font:inherit;color:inherit}
+
+/* math typesetting */
+.m{font-family:var(--f-display);font-size:1.08em;white-space:nowrap}
+.m i{font-style:italic}
+.mblock{display:block;font-family:var(--f-display);font-size:1.12rem;line-height:1.9;padding:.6rem .9rem;margin:.75rem 0 0;background:color-mix(in srgb,var(--left) 6%,var(--surface));border-left:2px solid var(--left);border-radius:0 6px 6px 0;overflow-x:auto;white-space:nowrap}
+.mblock i{font-style:italic}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.85em;line-height:1.1;margin:0 .1em}
+.frac>span:first-child{border-bottom:1px solid currentColor;padding:0 .15em}
+.ol{text-decoration:overline}
+
+/* nav */
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);padding-block:.6rem}
+.brand{font-family:var(--f-display);font-size:1.15rem;text-decoration:none;white-space:nowrap}
+.navr{display:flex;align-items:center;gap:clamp(.6rem,2vw,1.5rem);min-width:0}
+nav ul{display:flex;gap:clamp(.6rem,2vw,1.5rem);list-style:none;margin:0;padding:0;flex-wrap:wrap}
+nav a{text-decoration:none;font-size:.95rem;color:var(--muted)}
+nav a:hover{color:var(--fg)}
+.theme-btn{display:inline-grid;place-items:center;width:2rem;height:2rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);cursor:pointer;flex:none}
+.theme-btn:hover{border-color:var(--left)}
+.theme-btn svg{width:1rem;height:1rem;stroke:currentColor;fill:none;stroke-width:1.6}
+.theme-btn .sun{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .theme-btn .sun{display:block}:root:not([data-theme="light"]) .theme-btn .moon{display:none}}
+:root[data-theme="dark"] .theme-btn .sun{display:block}
+:root[data-theme="dark"] .theme-btn .moon{display:none}
+@media (max-width:640px){.brand{display:none} header.nav .wrap{justify-content:center} nav a{font-size:.8rem} nav ul,.navr{gap:.55rem}}
+
+/* hero */
+.hero-shell{position:relative;overflow:hidden}
+#grid{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse at 60% 45%,#000 30%,transparent 78%);mask-image:radial-gradient(ellipse at 60% 45%,#000 30%,transparent 78%)}
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:var(--s4);align-items:center;padding-block:var(--s5) var(--s4)}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr);padding-block:var(--s4)}}
+.idrow{display:flex;align-items:center;gap:var(--s2);flex-wrap:wrap}
+.avatar{width:4.5rem;height:4.5rem;border-radius:50%;overflow:hidden;flex:none;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar .mono{font-family:var(--f-display);font-size:1.6rem;color:var(--left)}
+.status{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.02em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.25rem .75rem;background:var(--bg)}
+.status i{width:.5rem;height:.5rem;border-radius:50%;background:var(--left);box-shadow:0 0 0 3px color-mix(in srgb,var(--left) 22%,transparent)}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.6rem,6vw,4.1rem);line-height:1.02;letter-spacing:-.015em;margin:var(--s3) 0 var(--s2);text-wrap:balance}
+.role{font-size:1.1rem;color:var(--muted);margin:0 0 var(--s3)}
+.lede{font-family:var(--f-display);font-size:clamp(1.25rem,2.2vw,1.45rem);line-height:1.45;margin:0 0 var(--s3);max-width:34em;text-wrap:pretty}
+.lede em{font-style:italic;color:var(--left)}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem}
+.btn{display:inline-flex;align-items:center;gap:.45rem;font:500 .95rem var(--f-body);padding:.55rem 1rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;cursor:pointer}
+.btn:hover{border-color:var(--left);color:var(--fg)}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.primary:hover{background:var(--left);border-color:var(--left);color:var(--bg)}
+
+/* figures */
+figure.fig{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:var(--s2);min-width:0}
+figure.fig canvas{display:block;width:100%;height:auto;max-width:100%}
+#rings{aspect-ratio:16/9}
+#qnm{aspect-ratio:16/10}
+.legend{display:flex;flex-wrap:wrap;gap:var(--s2);font-family:var(--f-mono);font-size:.78rem;color:var(--muted);margin-top:.5rem}
+.legend span{display:inline-flex;align-items:center;gap:.4rem}
+.legend b{display:inline-block;width:.6rem;height:.6rem;border-radius:50%}
+.ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:.75rem;align-items:center;margin-top:.75rem;font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.ctrl input{width:100%;accent-color:var(--right)}
+.ctrl output{min-width:3.4em;text-align:right;font-variant-numeric:tabular-nums;color:var(--fg)}
+.play{border:1px solid var(--line);background:var(--bg);border-radius:5px;padding:.15rem .5rem;cursor:pointer;font:500 .75rem var(--f-mono);color:var(--muted)}
+.play:hover{color:var(--fg);border-color:var(--fg)}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:.75rem;line-height:1.5}
+figcaption .m{color:var(--fg)}
+
+/* sections */
+section{padding-block:var(--s4);border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr);gap:var(--s3)}
+@media (max-width:760px){.sec-head{grid-template-columns:minmax(0,1fr);gap:var(--s2)}}
+h2{font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.15;margin:0;text-wrap:balance}
+.kicker{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .35rem}
+h3{font-family:var(--f-display);font-weight:500;font-size:1.25rem;line-height:1.3;margin:0 0 .35rem;text-wrap:balance}
+p{margin:0 0 var(--s2);max-width:65ch}
+.muted{color:var(--muted)}
+
+/* news */
+ol.news{list-style:none;margin:0;padding:0;position:relative}
+ol.news li{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:var(--s2);padding-block:.55rem;position:relative}
+ol.news time{font-family:var(--f-mono);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:.15rem}
+ol.news .ev{padding-left:1.1rem;border-left:1px solid var(--line);position:relative;min-width:0}
+ol.news .ev::before{content:"";position:absolute;left:-.3rem;top:.55rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--bg);border:2px solid var(--left)}
+ol.news li:first-child .ev::before{background:var(--left)}
+.badge{display:inline-block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.05rem .4rem;border-radius:3px;margin-right:.4rem;vertical-align:.1em;border:1px solid var(--line);color:var(--muted)}
+.badge.pre{border-color:color-mix(in srgb,var(--right) 45%,var(--line));color:var(--right)}
+.badge.pub{border-color:color-mix(in srgb,var(--left) 45%,var(--line));color:var(--left)}
+
+/* research themes */
+.themes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+@media (max-width:620px){.themes{grid-template-columns:minmax(0,1fr)}}
+.theme{padding:var(--s3) var(--s3) var(--s3) 0;border-bottom:1px solid var(--line);min-width:0}
+.theme:nth-child(odd){border-right:1px solid var(--line)}
+.theme:nth-child(even){padding-left:var(--s3)}
+@media (max-width:620px){.theme:nth-child(odd){border-right:0}.theme:nth-child(even){padding-left:0}}
+.theme > p{font-size:.98rem;color:var(--muted);margin:0}
+.sym{font-family:var(--f-display);font-style:italic;font-size:1.05rem;color:var(--left);display:block;margin-bottom:.35rem}
+details.more-d{margin-top:.6rem}
+details.more-d summary{cursor:pointer;font:500 .85rem var(--f-mono);color:var(--left);list-style:none;display:inline-flex;align-items:center;gap:.35rem}
+details.more-d summary::-webkit-details-marker{display:none}
+details.more-d summary::after{content:"+";font-size:1rem;line-height:1}
+details.more-d[open] summary::after{content:"−"}
+details.more-d .body{font-size:.96rem;margin-top:.5rem}
+details.more-d .body p{margin:0 0 .5rem}
+.eqnote{font-size:.8rem;color:var(--muted);margin-top:.35rem}
+.feature{margin-top:var(--s4);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--s3);align-items:start}
+@media (max-width:860px){.feature{grid-template-columns:minmax(0,1fr)}}
+.feature .copy-col p{font-size:.98rem}
+
+/* publications */
+.filters{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:var(--s3)}
+.fchip{font:500 .8rem var(--f-mono);padding:.3rem .7rem;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--muted)}
+.fchip:hover{border-color:var(--left);color:var(--fg)}
+.fchip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+ol.pubs{list-style:none;margin:0;padding:0}
+ol.pubs li{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:var(--s3);padding-block:var(--s3);border-bottom:1px solid var(--line)}
+ol.pubs li:first-child{padding-top:0}
+@media (max-width:520px){ol.pubs li{grid-template-columns:minmax(0,1fr);gap:.75rem}}
+.thumb{width:5.5rem;height:5.5rem;border-radius:8px;border:1px solid var(--line);background:color-mix(in srgb,var(--left) 5%,var(--surface));display:block}
+.thumb canvas{width:100%;height:100%;display:block}
+.venue{font-size:.95rem;color:var(--muted);margin:0 0 .5rem}
+.venue em{font-style:italic;color:var(--fg)}
+.authors{font-size:.95rem;margin:0 0 .15rem}
+.authors b{font-weight:600}
+.brief{font-size:.98rem;margin:0 0 .6rem}
+.brief strong{font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.tag{font-family:var(--f-mono);font-size:.75rem;padding:.2rem .55rem;border:1px solid var(--line);border-radius:4px;text-decoration:none;color:var(--muted);background:transparent;cursor:pointer;line-height:1.5}
+a.tag:hover,button.tag:hover{border-color:var(--left);color:var(--left)}
+details.bib{width:100%}
+details.bib summary{display:inline-block;list-style:none}
+details.bib summary::-webkit-details-marker{display:none}
+details.bib pre{margin:.6rem 0 0;padding:.75rem;background:var(--bg);border:1px solid var(--line);border-radius:6px;font:400 .76rem/1.55 var(--f-mono);overflow-x:auto;white-space:pre}
+.bibbar{display:flex;justify-content:flex-end;margin-top:.4rem}
+.kicker.sub{margin-top:var(--s4);margin-bottom:var(--s2)}
+ul.prep{margin:0;padding-left:1.1rem;display:grid;gap:.5rem;font-size:.98rem}
+ul.prep li{max-width:65ch}
+.prep-note{font-size:.9rem;margin:.6rem 0 0}
+.more{margin-top:var(--s3);font-size:.95rem}
+.empty{font-size:.95rem;color:var(--muted);padding-block:var(--s2)}
+
+/* background */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4)}
+@media (max-width:760px){.cols{grid-template-columns:minmax(0,1fr);gap:var(--s3)}}
+dl.items{margin:0}
+dl.items dt{font-weight:600;margin-top:var(--s2)}
+dl.items dt:first-child{margin-top:0}
+dl.items dd{margin:.15rem 0 0;color:var(--muted);font-size:.98rem}
+.code{font-family:var(--f-mono);font-size:.85rem;color:var(--fg)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
+.chip{font-family:var(--f-mono);font-size:.78rem;padding:.25rem .6rem;border-radius:999px;background:color-mix(in srgb,var(--left) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--left) 25%,var(--line))}
+
+/* beyond */
+.beyond{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+@media (max-width:760px){.beyond{grid-template-columns:minmax(0,1fr)}}
+.beyond div{min-width:0}
+.beyond p{font-size:.98rem;color:var(--muted);margin:0}
+
+/* contact */
+.contact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+@media (max-width:760px){.contact{grid-template-columns:minmax(0,1fr)}}
+.contact .label{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.addr{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.addr code{font-family:var(--f-mono);font-size:.9rem;user-select:all;overflow-wrap:anywhere}
+.copy{font:500 .75rem var(--f-mono);padding:.15rem .5rem;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:4px;cursor:pointer}
+.copy:hover{color:var(--fg);border-color:var(--fg)}
+ul.links{list-style:none;margin:0;padding:0;display:grid;gap:.3rem}
+footer{padding-block:var(--s4);border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s2)}
+
+/* motion: hero load sequence + scroll-driven rise (content stays visible where unsupported) */
+@media (prefers-reduced-motion: no-preference){
+  .hero > *{animation:heroIn .7s cubic-bezier(.2,.7,.2,1) both}
+  .hero > *:nth-child(2){animation-delay:.12s}
+  @keyframes heroIn{from{transform:translateY(10px);opacity:.4}}
+  @supports (animation-timeline: view()){
+    .rise{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
+    @keyframes rise{from{transform:translateY(18px);opacity:.35}}
+  }
+}
+</style>
+</head><body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Abhishek Rout</a>
+    <div class="navr">
+      <nav aria-label="Sections"><ul>
+        <li><a href="#news">News</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Papers</a></li>
+        <li><a href="#background">Background</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul></nav>
+      <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch between light and dark theme">
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero-shell" id="hero-shell">
+    <canvas id="grid" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero">
+        <div>
+          <div class="idrow">
+            <div class="avatar">
+              <img src="headshot.jpg" alt="Abhishek Rout" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+              <span class="mono" hidden>AR</span>
+            </div>
+            <span class="status"><i></i>Open to postdoctoral positions</span>
+          </div>
+          <h1>Abhishek Rout</h1>
+          <p class="role">Theoretical physicist · Ph.D. in Physics, University of South Carolina (2025)</p>
+          <p class="lede">I study how gravity behaves in its most extreme regimes, where our understanding of spacetime starts to break down. My current focus is <em>parity violation</em> in gravity and the signatures it leaves on black holes, gravitational waves and the early universe.</p>
+          <div class="actions">
+            <a class="btn primary" href="Rout_Abhishek_CV.pdf" target="_blank" rel="noopener">Curriculum vitae (PDF)</a>
+            <a class="btn" href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+            <a class="btn" href="https://orcid.org/0009-0009-1118-1007" target="_blank" rel="noopener">ORCID</a>
+          </div>
+        </div>
+
+        <figure class="fig" aria-labelledby="rings-cap">
+          <canvas id="rings" role="img" aria-label="Two rings of free test particles deformed by circularly polarized gravitational waves of opposite handedness; the right-handed ring is stretched more strongly as the birefringence slider increases"></canvas>
+          <div class="legend">
+            <span><b style="background:var(--left)"></b>left-handed ring</span>
+            <span><b style="background:var(--right)"></b>right-handed ring</span>
+          </div>
+          <div class="ctrl">
+            <label for="biref">birefringence Δ</label>
+            <input id="biref" type="range" min="0" max="100" value="45">
+            <output id="biref-out" for="biref">0.27</output>
+            <button class="play" id="rings-play" type="button" aria-pressed="false">Pause</button>
+          </div>
+          <figcaption id="rings-cap">
+            Free test particles hit by circularly polarized waves, <span class="m"><i>h</i><sub>+</sub> = <i>A</i> cos <i>ωt</i>, <i>h</i><sub>×</sub> = ±<i>A</i> sin <i>ωt</i></span>. The two handedness patterns rotate in opposite directions. A parity-violating coupling amplifies one and damps the other, <span class="m"><i>A</i><sub>R,L</sub> = <i>A</i><sub>0</sub> e<sup>±Δ</sup></span>. Schematic, with exaggerated amplitudes.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <section id="news">
+    <div class="wrap sec-head">
+      <div>
+        <p class="kicker">News</p>
+        <h2>Recently</h2>
+      </div>
+      <ol class="news rise">
+        <li><time datetime="2026-10">Oct 2026</time><div class="ev"><span class="badge pre">Preprint</span>Analytic parity-violating greybody factors of a dynamical Chern–Simons black hole, submitted to <em>General Relativity and Gravitation</em>. <a href="https://arxiv.org/abs/2610.10280" target="_blank" rel="noopener">arXiv:2610.10280</a></div></li>
+        <li><time datetime="2026-08">Aug 2026</time><div class="ev"><span class="badge pre">Preprint</span>Parity-violating gravitational-wave strain from pulsar glitches in Chern–Simons gravity, submitted to <em>Physical Review D</em>. <a href="https://arxiv.org/abs/2608.24002" target="_blank" rel="noopener">arXiv:2608.24002</a></div></li>
+        <li><time datetime="2026-04">Apr 2026</time><div class="ev"><span class="badge pub">Published</span>Axial perturbations of the Reissner–Nordström metric against a parity-violating gravity background, in <em>Symmetry</em>.</div></li>
+        <li><time datetime="2026-01">Jan 2026</time><div class="ev"><span class="badge pub">Published</span>Primordial gravitational-wave birefringence in de Sitter space, in <em>Universe</em>.</div></li>
+        <li><time datetime="2025-12-15">Dec 2025</time><div class="ev"><span class="badge">Degree</span>Ph.D. in Physics, University of South Carolina. Dissertation: <a href="https://scholarcommons.sc.edu/etd/8617/" target="_blank" rel="noopener"><em>Gravitational Perturbations and Quantum Field Interactions in Modified Spacetime Backgrounds</em></a>.</div></li>
+        <li><time datetime="2024-12">Dec 2024</time><div class="ev"><span class="badge pub">Published</span>Bound states and particle production by breather-type backgrounds, in <em>Symmetry</em>.</div></li>
+        <li><time datetime="2024-07">Jul 2024</time><div class="ev"><span class="badge">Talk</span>Contributed talk, IUCSS Workshop on Theoretical Aspects of the Standard-Model Extension and Modified Gravity, Indiana University.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="research">
+    <div class="wrap sec-head">
+      <div>
+        <p class="kicker">Research</p>
+        <h2>Themes</h2>
+      </div>
+      <div>
+        <p>I work analytically wherever possible and use Python and Mathematica for the parts that need numerics and visualisation. Open any theme below for a short explanation and the equation at its centre.</p>
+        <div class="themes rise">
+          <div class="theme">
+            <span class="sym">ϑ <sup>*</sup>RR</span>
+            <h3>Chern–Simons modified gravity</h3>
+            <p>Parity-violating extensions of general relativity and what they predict for compact objects and cosmology.</p>
+            <details class="more-d"><summary>Explain</summary><div class="body">
+              <p>General relativity treats left and right the same. Chern–Simons gravity adds a scalar field ϑ coupled to the Pontryagin density, a curvature term that changes sign under a mirror reflection. Wherever ϑ varies, spacetime responds differently to left- and right-handed disturbances.</p>
+              <span class="mblock">S = ∫ d<sup>4</sup><i>x</i> √<span class="ol">−<i>g</i></span> [ <i>κ</i><i>R</i> + <span class="frac"><span><i>α</i></span><span>4</span></span> <i>ϑ</i> <sup>*</sup><i>RR</i> − <span class="frac"><span><i>β</i></span><span>2</span></span> (∇<i>ϑ</i>)<sup>2</sup> − <i>V</i>(<i>ϑ</i>) ]</span>
+            </div></details>
+          </div>
+          <div class="theme">
+            <span class="sym">δg<sub>μν</sub></span>
+            <h3>Black hole perturbation theory</h3>
+            <p>Axial perturbations, quasinormal modes and isospectrality breaking of charged and rotating black holes in dynamical Chern–Simons gravity.</p>
+            <details class="more-d"><summary>Explain</summary><div class="body">
+              <p>A disturbed black hole rings down at a set of complex frequencies, its quasinormal modes. Each perturbation obeys a wave equation with an effective potential. In general relativity the axial and polar sectors ring at identical frequencies. Parity violation can break that degeneracy, which gives a clean observational test.</p>
+              <span class="mblock"><span class="frac"><span><i>d</i><sup>2</sup>Ψ</span><span><i>dr</i><sub>*</sub><sup>2</sup></span></span> + [ <i>ω</i><sup>2</sup> − <i>V</i>(<i>r</i>) ] Ψ = 0</span>
+              <p class="eqnote">Master equation; for Schwarzschild axial modes, <span class="m"><i>V</i> = (1 − 2<i>M</i>/<i>r</i>)[ℓ(ℓ+1)/<i>r</i><sup>2</sup> − 6<i>M</i>/<i>r</i><sup>3</sup>]</span>.</p>
+            </div></details>
+          </div>
+          <div class="theme">
+            <span class="sym">|β<sub>k</sub>|<sup>2</sup></span>
+            <h3>QFT in curved spacetime</h3>
+            <p>Bound states and particle production in time-dependent backgrounds, and parity-violating greybody factors for black hole emission.</p>
+            <details class="more-d"><summary>Explain</summary><div class="body">
+              <p>A time-dependent background mixes positive- and negative-frequency modes, so a state that starts as the vacuum ends up containing particles. The Bogoliubov coefficients measure that mixing. Oscillating soliton-like "breathers" are a controlled setting where both bound states and particle creation can be worked out.</p>
+              <span class="mblock"><i>u</i><sub><i>k</i></sub><sup>out</sup> = <i>α</i><sub><i>k</i></sub> <i>u</i><sub><i>k</i></sub><sup>in</sup> + <i>β</i><sub><i>k</i></sub> <i>u</i><sub><i>k</i></sub><sup>in *</sup>,  ⟨<i>N</i><sub><i>k</i></sub>⟩ = |<i>β</i><sub><i>k</i></sub>|<sup>2</sup></span>
+            </div></details>
+          </div>
+          <div class="theme">
+            <span class="sym">h<sub>L</sub> ≠ h<sub>R</sub></span>
+            <h3>Gravitational-wave phenomenology</h3>
+            <p>Observable signatures of parity violation: birefringence of primordial gravitational waves and parity-violating strain from pulsar glitches.</p>
+            <details class="more-d"><summary>Explain</summary><div class="body">
+              <p>If gravity has a preferred handedness, the two circular polarizations of a gravitational wave propagate differently. They can differ in amplitude (amplitude birefringence) or in speed (velocity birefringence), and both leave imprints that detectors and CMB polarization can look for.</p>
+              <span class="mblock"><i>h</i><sub>A</sub>″ + (2 + <i>ν</i><sub>A</sub>) ℋ <i>h</i><sub>A</sub>′ + (1 + <i>μ</i><sub>A</sub>) <i>k</i><sup>2</sup> <i>h</i><sub>A</sub> = 0</span>
+              <p class="eqnote">A standard parametrization for each helicity A ∈ {R, L}: <span class="m"><i>ν</i><sub>R</sub> ≠ <i>ν</i><sub>L</sub></span> gives amplitude birefringence, <span class="m"><i>μ</i><sub>R</sub> ≠ <i>μ</i><sub>L</sub></span> gives velocity birefringence.</p>
+            </div></details>
+          </div>
+        </div>
+
+        <div class="feature rise">
+          <figure class="fig" aria-labelledby="qnm-cap">
+            <canvas id="qnm" role="img" aria-label="Quasinormal mode frequencies in the complex plane: polar modes stay at their general-relativity values while axial modes drift away as the parity-violating coupling increases"></canvas>
+            <div class="legend">
+              <span><b style="background:var(--left)"></b>polar</span>
+              <span><b style="background:var(--right)"></b>axial</span>
+            </div>
+            <div class="ctrl">
+              <label for="coup">coupling</label>
+              <input id="coup" type="range" min="0" max="100" value="55">
+              <output id="coup-out" for="coup">0.55</output>
+              <span></span>
+            </div>
+          </figure>
+          <div class="copy-col">
+            <p class="kicker">Interactive</p>
+            <h3>Breaking isospectrality</h3>
+            <p id="qnm-cap">In general relativity, the axial and polar perturbations of a black hole share one spectrum of ringing frequencies. A parity-violating coupling acts on the axial sector, so as it grows the axial modes drift away from their polar partners. Measuring that split in a ringdown signal would be a direct test of parity in gravity.</p>
+            <p class="muted" style="font-size:.88rem">The anchor points are the Schwarzschild ℓ = 2 overtones <span class="m"><i>n</i> = 0, 1, 2</span> in units of <span class="m"><i>M</i></span>. The drift is illustrative, not a computed result.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="wrap sec-head">
+      <div>
+        <p class="kicker">Publications</p>
+        <h2>Papers and preprints</h2>
+      </div>
+      <div>
+        <div class="filters" role="group" aria-label="Filter papers by topic">
+          <button class="fchip" type="button" data-f="all" aria-pressed="true">All</button>
+          <button class="fchip" type="button" data-f="cs" aria-pressed="false">Chern–Simons</button>
+          <button class="fchip" type="button" data-f="bh" aria-pressed="false">Black holes</button>
+          <button class="fchip" type="button" data-f="gw" aria-pressed="false">Gravitational waves</button>
+          <button class="fchip" type="button" data-f="qft" aria-pressed="false">QFT</button>
+        </div>
+
+        <ol class="pubs" id="pubs-main">
+          <li data-t="cs gw">
+            <span class="thumb"><canvas data-kind="biref" width="176" height="176"></canvas></span>
+            <div>
+              <h3>Primordial Gravitational Wave Birefringence in a de Sitter Background with Chern–Simons Coupling</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
+              <p class="venue"><em>Universe</em> 12, 6 (2026)</p>
+              <p class="brief"><strong>In brief:</strong> Chern–Simons coupling adds chiral corrections to tensor-mode dispersion in de Sitter space, leaving a lasting parity-violating imprint on the primordial tensor spectrum.</p>
+              <div class="tags">
+                <a class="tag" href="https://doi.org/10.3390/universe12010006" target="_blank" rel="noopener">DOI</a>
+                <a class="tag" href="https://arxiv.org/abs/2512.03919" target="_blank" rel="noopener">arXiv:2512.03919</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@article{Rout:2026biref,
+  author        = {Rout, Abhishek and Altschul, Brett},
+  title         = {Primordial Gravitational Wave Birefringence in a de {Sitter} Background with {Chern--Simons} Coupling},
+  journal       = {Universe},
+  volume        = {12},
+  pages         = {6},
+  year          = {2026},
+  doi           = {10.3390/universe12010006},
+  eprint        = {2512.03919},
+  archivePrefix = {arXiv}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
+          <li data-t="cs bh">
+            <span class="thumb"><canvas data-kind="barrier" width="176" height="176"></canvas></span>
+            <div>
+              <h3>First-Order Axial Perturbation of the Reissner–Nordström Metric Against a Possible Parity-Violating Gravity Background</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
+              <p class="venue"><em>Symmetry</em> 18, 560 (2026)</p>
+              <p class="brief"><strong>In brief:</strong> How a charged black hole responds to axial perturbations in a parity-violating (Chern–Simons-type) gravity background.</p>
+              <div class="tags">
+                <a class="tag" href="https://doi.org/10.3390/sym18040560" target="_blank" rel="noopener">DOI</a>
+                <a class="tag" href="https://arxiv.org/abs/2510.01106" target="_blank" rel="noopener">arXiv:2510.01106</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@article{Rout:2026rn,
+  author        = {Rout, Abhishek and Altschul, Brett},
+  title         = {First-Order Axial Perturbation of the {Reissner--Nordstr\"om} Metric Against a Possible Parity-Violating Gravity Background},
+  journal       = {Symmetry},
+  volume        = {18},
+  pages         = {560},
+  year          = {2026},
+  doi           = {10.3390/sym18040560},
+  eprint        = {2510.01106},
+  archivePrefix = {arXiv}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
+          <li data-t="qft">
+            <span class="thumb"><canvas data-kind="breather" width="176" height="176"></canvas></span>
+            <div>
+              <h3>Bound States and Particle Production by Breather-Type Background Field Configurations</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
+              <p class="venue"><em>Symmetry</em> 16, 1571 (2024)</p>
+              <p class="brief"><strong>In brief:</strong> Bound states and particle creation for quantum fields in oscillating, localized breather backgrounds.</p>
+              <div class="tags">
+                <a class="tag" href="https://doi.org/10.3390/sym16121571" target="_blank" rel="noopener">DOI</a>
+                <a class="tag" href="https://arxiv.org/abs/2410.09273" target="_blank" rel="noopener">arXiv:2410.09273</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@article{Rout:2024breather,
+  author        = {Rout, Abhishek and Altschul, Brett},
+  title         = {Bound States and Particle Production by Breather-Type Background Field Configurations},
+  journal       = {Symmetry},
+  volume        = {16},
+  pages         = {1571},
+  year          = {2024},
+  doi           = {10.3390/sym16121571},
+  eprint        = {2410.09273},
+  archivePrefix = {arXiv}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
+        </ol>
+        <p class="empty" id="empty-main" hidden>No published papers under this topic yet.</p>
+
+        <p class="kicker sub" id="pre-head">Preprints</p>
+        <ol class="pubs" id="pubs-pre">
+          <li data-t="cs bh qft">
+            <span class="thumb"><canvas data-kind="greybody" width="176" height="176"></canvas></span>
+            <div>
+              <h3>Analytic Parity-Violating Greybody Factors of a Dynamical Chern–Simons Black Hole</h3>
+              <p class="authors"><b>A. Rout</b></p>
+              <p class="venue">Submitted to <em>General Relativity and Gravitation</em> (2026)</p>
+              <p class="brief"><strong>In brief:</strong> Analytic greybody factors for a black hole in dynamical Chern–Simons gravity, where the parity-violating coupling makes left- and right-handed emission differ.</p>
+              <div class="tags">
+                <a class="tag" href="https://arxiv.org/abs/2610.10280" target="_blank" rel="noopener">arXiv:2610.10280</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@misc{Rout:2026greybody,
+  author        = {Rout, Abhishek},
+  title         = {Analytic Parity-Violating Greybody Factors of a Dynamical {Chern--Simons} Black Hole},
+  year          = {2026},
+  eprint        = {2610.10280},
+  archivePrefix = {arXiv},
+  note          = {Submitted to Gen. Relativ. Gravit.}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
+          <li data-t="cs gw">
+            <span class="thumb"><canvas data-kind="pulsar" width="176" height="176"></canvas></span>
+            <div>
+              <h3>Gravitational Wave Parity-Violating Strain from Pulsar Glitches in Chern–Simons Modified Gravity</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
+              <p class="venue">Submitted to <em>Physical Review D</em> (2026)</p>
+              <p class="brief"><strong>In brief:</strong> Predicts the parity-violating gravitational-wave strain that pulsar glitches would produce in dynamical Chern–Simons gravity.</p>
+              <div class="tags">
+                <a class="tag" href="https://arxiv.org/abs/2608.24002" target="_blank" rel="noopener">arXiv:2608.24002</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@misc{Rout:2026pulsar,
+  author        = {Rout, Abhishek and Altschul, Brett},
+  title         = {Gravitational Wave Parity-Violating Strain from Pulsar Glitches in {Chern--Simons} Modified Gravity},
+  year          = {2026},
+  eprint        = {2608.24002},
+  archivePrefix = {arXiv},
+  note          = {Submitted to Phys. Rev. D}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <p class="kicker sub">In preparation</p>
+        <ul class="prep">
+          <li>Mixed-order parity-violating corrections to rotating black holes in combined scalar–Gauss–Bonnet and dynamical Chern–Simons gravity</li>
+          <li>Isospectrality breaking in the axial quasinormal modes of Reissner–Nordström black holes in dynamical Chern–Simons gravity</li>
+          <li>Rotation-induced isospectrality breaking of charged black holes in dynamical Chern–Simons gravity</li>
+        </ul>
+        <p class="prep-note muted">All with B. Altschul.</p>
+        <p class="more muted">Full list: <a href="https://inspirehep.net/authors/3132273" target="_blank" rel="noopener">INSPIRE-HEP</a> · <a href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="Rout_Abhishek_Publications.pdf" target="_blank" rel="noopener">publication list (PDF)</a> · <a href="https://www.researchgate.net/profile/Abhishek-Rout-4/publications" target="_blank" rel="noopener">ResearchGate</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="background">
+    <div class="wrap sec-head">
+      <div>
+        <p class="kicker">Background</p>
+        <h2>Education, teaching and service</h2>
+      </div>
+      <div class="cols rise">
+        <div>
+          <p class="kicker">Education</p>
+          <dl class="items">
+            <dt>Ph.D. in Physics, University of South Carolina</dt>
+            <dd>2019–2025 · Advisor: Prof. Brett Altschul</dd>
+            <dt>Integrated BS-MS in Physics, IISER Kolkata</dt>
+            <dd>2014–2019 · INSPIRE Fellow, DST, Government of India</dd>
+          </dl>
+          <p class="kicker" style="margin-top:var(--s3)">Teaching Assistant · USC · 2019–2025</p>
+          <dl class="items">
+            <dt><span class="code">PHYS 201</span> General Physics I</dt>
+            <dd>Led weekly discussion sections of about 40 students on kinematics, dynamics and conservation laws.</dd>
+            <dt><span class="code">PHYS 202</span> General Physics II</dt>
+            <dd>Ran electromagnetism labs covering electric fields, circuits and magnetism. Built Python simulations to demonstrate electromagnetic phenomena.</dd>
+          </dl>
+        </div>
+        <div>
+          <p class="kicker">Outreach &amp; professional</p>
+          <dl class="items">
+            <dt>Talks</dt>
+            <dd>Contributed talk, IUCSS Workshop on Theoretical Aspects of the Standard-Model Extension and Modified Gravity, Indiana University (2024). Seminar speaker, USC Theoretical Physics Group (2023–2025).</dd>
+            <dt>Refereeing</dt>
+            <dd>Co-referee, with Prof. Brett Altschul, for journal articles in classical and quantum gravity.</dd>
+            <dt>Outreach</dt>
+            <dd>Designed and ran interactive demonstration workshops on mechanics, wave optics and astronomy for high-school students, IISER Kolkata and local schools (2015–2019).</dd>
+            <dt>Honours</dt>
+            <dd>Selected for the DST Science Awareness Camp at NIST Berhampur, one of the top 50 students nationally.</dd>
+            <dt>Tools</dt>
+            <dd>
+              <div class="chips">
+                <span class="chip">Python</span><span class="chip">Mathematica</span><span class="chip">C</span><span class="chip">MATLAB</span><span class="chip">LaTeX</span><span class="chip">ODE/PDE solvers</span><span class="chip">symbolic algebra</span>
+              </div>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="beyond">
+    <div class="wrap sec-head">
+      <div>
+        <p class="kicker">Beyond physics</p>
+        <h2>Off the blackboard</h2>
+      </div>
+      <div class="beyond rise">
+        <div>
+          <h3>Philosophy of physics</h3>
+          <p>The conceptual questions underneath the calculations: what spacetime is, and what our theories of it actually claim.</p>
+        </div>
+        <div>
+          <h3>Science fiction</h3>
+          <p>Stories that take spacetime, gravity and the structure of reality seriously.</p>
+        </div>
+        <div>
+          <h3>Music and badminton</h3>
+          <p>Member of the music and badminton clubs at IISER Kolkata.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap sec-head">
+      <div>
+        <p class="kicker">Contact</p>
+        <h2>Get in touch</h2>
+      </div>
+      <div>
+        <p>I'm open to postdoctoral opportunities and research collaborations in modified gravity, black hole physics and gravitational waves.</p>
+        <div class="contact">
+          <div>
+            <div class="label">University</div>
+            <div class="addr"><code>arout@email.sc.edu</code><button class="copy" type="button" data-copy="arout@email.sc.edu">Copy</button></div>
+          </div>
+          <div>
+            <div class="label">Personal</div>
+            <div class="addr"><code>abhishekrout1@gmail.com</code><button class="copy" type="button" data-copy="abhishekrout1@gmail.com">Copy</button></div>
+          </div>
+          <div>
+            <div class="label">Profiles</div>
+            <ul class="links">
+              <li><a href="https://orcid.org/0009-0009-1118-1007" target="_blank" rel="noopener">ORCID ↗</a></li>
+              <li><a href="https://inspirehep.net/authors/3132273" target="_blank" rel="noopener">INSPIRE-HEP ↗</a></li>
+              <li><a href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar ↗</a></li>
+              <li><a href="https://www.researchgate.net/profile/Abhishek-Rout-4/publications" target="_blank" rel="noopener">ResearchGate ↗</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Abhishek Rout</span>
+    <span>Department of Physics and Astronomy, University of South Carolina</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const darkMq = matchMedia('(prefers-color-scheme: dark)');
+  const tok = n => getComputedStyle(root).getPropertyValue(n).trim();
+  const redrawers = [];
+  const redrawAll = () => redrawers.forEach(f => f());
+
+  /* ---------- theme toggle ---------- */
+  try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') root.dataset.theme = t; } catch(e){}
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    const cur = root.dataset.theme || (darkMq.matches ? 'dark' : 'light');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch(e){}
+    redrawAll();
+  });
+  darkMq.addEventListener?.('change', redrawAll);
+
+  function fit(cv, ratio){
+    const r = cv.getBoundingClientRect();
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const W = Math.max(1, Math.round(r.width)), H = Math.max(1, Math.round(ratio ? r.width * ratio : r.height));
+    cv.width = W * dpr; cv.height = H * dpr;
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+    return {ctx, W, H};
+  }
+
+  /* ---------- hero: GW test-particle rings ---------- */
+  (function(){
+    const cv = document.getElementById('rings'), sl = document.getElementById('biref'),
+          out = document.getElementById('biref-out'), btn = document.getElementById('rings-play');
+    let g, t = 0, raf = null, paused = false;
+    const N = 20;
+    const size = () => { g = fit(cv, 9/16); };
+    function ring(ctx, cx, cy, R, A, s, color, label){
+      const hp = A * Math.cos(t), hx = s * A * Math.sin(t);
+      ctx.strokeStyle = tok('--line'); ctx.lineWidth = 1; ctx.setLineDash([3,4]);
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = color;
+      for (let i = 0; i < N; i++){
+        const th = 2*Math.PI*i/N, x = Math.cos(th), y = Math.sin(th);
+        const dx = .5*(hp*x + hx*y), dy = .5*(hx*x - hp*y);
+        ctx.beginPath(); ctx.arc(cx + R*(x+dx), cy - R*(y+dy), 3.2, 0, 2*Math.PI); ctx.fill();
+      }
+      // rotation arrow
+      ctx.strokeStyle = color; ctx.lineWidth = 1.4;
+      const a0 = s > 0 ? -2.2 : -0.95, a1 = s > 0 ? -0.95 : -2.2, rr = R*1.42;
+      ctx.beginPath(); ctx.arc(cx, cy, rr, a0, a1, s < 0); ctx.stroke();
+      const ax = cx + rr*Math.cos(a1), ay = cy + rr*Math.sin(a1), dir = s > 0 ? 1 : -1;
+      const tx = -Math.sin(a1)*dir, ty = Math.cos(a1)*dir;
+      ctx.beginPath(); ctx.moveTo(ax, ay);
+      ctx.lineTo(ax - 7*tx + 4*ty, ay - 7*ty - 4*tx); ctx.moveTo(ax, ay);
+      ctx.lineTo(ax - 7*tx - 4*ty, ay - 7*ty + 4*tx); ctx.stroke();
+      ctx.fillStyle = tok('--muted'); ctx.font = '12px "JetBrains Mono", ui-monospace, monospace'; ctx.textAlign = 'center';
+      ctx.fillText(label, cx, cy + R*1.42 + 18);
+    }
+    function draw(){
+      const {ctx, W, H} = g; ctx.clearRect(0,0,W,H);
+      const D = (sl.value/100) * 0.6, A0 = 0.3;
+      const R = Math.min(W/4.6, H/3.4), cy = H*0.47;
+      ring(ctx, W*0.27, cy, R, A0*Math.exp(-D), -1, tok('--left'), 'L   A = ' + (A0*Math.exp(-D)).toFixed(2));
+      ring(ctx, W*0.73, cy, R, A0*Math.exp(D), 1, tok('--right'), 'R   A = ' + (A0*Math.exp(D)).toFixed(2));
+    }
+    function loop(){ t += 0.045; draw(); raf = requestAnimationFrame(loop); }
+    function start(){ cancelAnimationFrame(raf); if (reduce.matches || paused || document.hidden){ draw(); } else loop(); }
+    sl.addEventListener('input', () => { out.value = ((sl.value/100)*0.6).toFixed(2); draw(); });
+    btn.addEventListener('click', () => { paused = !paused; btn.textContent = paused ? 'Play' : 'Pause'; btn.setAttribute('aria-pressed', paused); start(); });
+    if (reduce.matches){ paused = true; btn.textContent = 'Play'; t = 0.6; }
+    addEventListener('resize', () => { size(); draw(); });
+    document.addEventListener('visibilitychange', start);
+    redrawers.push(draw);
+    size(); draw(); start();
+  })();
+
+  /* ---------- hero background: spacetime grid bending toward the cursor ---------- */
+  (function(){
+    const cv = document.getElementById('grid'), shell = document.getElementById('hero-shell');
+    let g, mx = -1e4, my = -1e4, tx = -1e4, ty = -1e4, raf = null, strength = 0, target = 0;
+    const size = () => { g = fit(cv); };
+    function warp(x, y){
+      const dx = mx - x, dy = my - y, r2 = dx*dx + dy*dy, s2 = 150*150;
+      const f = 0.32 * strength * s2 / (r2 + s2);
+      return [x + dx*f, y + dy*f];
+    }
+    function draw(){
+      const {ctx, W, H} = g; ctx.clearRect(0,0,W,H);
+      const step = 38;
+      ctx.lineWidth = 1;
+      const base = tok('--grid'), hot = tok('--gridwarp');
+      for (let pass = 0; pass < 2; pass++){
+        ctx.strokeStyle = pass ? base : base;
+        for (let x = 0; x <= W + step; x += step){
+          ctx.beginPath();
+          for (let y = 0; y <= H; y += 8){ const [a,b] = warp(x,y); y ? ctx.lineTo(a,b) : ctx.moveTo(a,b); }
+          ctx.stroke();
+        }
+        for (let y = 0; y <= H + step; y += step){
+          ctx.beginPath();
+          for (let x = 0; x <= W; x += 8){ const [a,b] = warp(x,y); x ? ctx.lineTo(a,b) : ctx.moveTo(a,b); }
+          ctx.stroke();
+        }
+        break;
+      }
+      if (strength > 0.02){
+        const grd = ctx.createRadialGradient(mx, my, 0, mx, my, 120);
+        grd.addColorStop(0, hot); grd.addColorStop(1, 'transparent');
+        ctx.globalAlpha = strength; ctx.fillStyle = grd; ctx.fillRect(mx-120, my-120, 240, 240); ctx.globalAlpha = 1;
+      }
+    }
+    function tick(){
+      mx += (tx - mx) * 0.15; my += (ty - my) * 0.15; strength += (target - strength) * 0.08;
+      draw();
+      if (Math.abs(tx-mx) + Math.abs(ty-my) > 0.5 || Math.abs(target-strength) > 0.01) raf = requestAnimationFrame(tick); else raf = null;
+    }
+    const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    if (!reduce.matches && matchMedia('(hover: hover)').matches){
+      shell.addEventListener('pointermove', e => {
+        const r = shell.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top;
+        if (mx < -1e3){ mx = tx; my = ty; }
+        target = 1; kick();
+      });
+      shell.addEventListener('pointerleave', () => { target = 0; kick(); });
+    }
+    addEventListener('resize', () => { size(); draw(); });
+    redrawers.push(draw);
+    size(); draw();
+  })();
+
+  /* ---------- QNM isospectrality figure ---------- */
+  (function(){
+    const cv = document.getElementById('qnm'), sl = document.getElementById('coup'), out = document.getElementById('coup-out');
+    const GR = [[0.37367,0.08896],[0.34671,0.27391],[0.30105,0.47828]]; // Schwarzschild l=2, n=0,1,2 (M=1)
+    const SH = [[-0.028,0.020],[-0.034,0.038],[-0.040,0.058]];           // illustrative axial drift per unit coupling
+    let g;
+    const size = () => { g = fit(cv, 10/16); };
+    function draw(){
+      const {ctx, W, H} = g; ctx.clearRect(0,0,W,H);
+      const c = sl.value/100;
+      const pl = 46, pr = 14, pt = 14, pb = 40, pw = W-pl-pr, ph = H-pt-pb;
+      const x0 = 0.24, x1 = 0.40, y0 = 0, y1 = 0.6;
+      const X = v => pl + (v-x0)/(x1-x0)*pw, Y = v => pt + (v-y0)/(y1-y0)*ph;
+      ctx.font = '11px "JetBrains Mono", ui-monospace, monospace'; ctx.fillStyle = tok('--muted'); ctx.strokeStyle = tok('--grid'); ctx.lineWidth = 1;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      for (let v = 0.24; v <= 0.4001; v += 0.04){ ctx.beginPath(); ctx.moveTo(X(v),pt); ctx.lineTo(X(v),pt+ph); ctx.stroke(); ctx.fillText(v.toFixed(2), X(v), pt+ph+6); }
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      for (let v = 0; v <= 0.6001; v += 0.1){ ctx.beginPath(); ctx.moveTo(pl,Y(v)); ctx.lineTo(pl+pw,Y(v)); ctx.stroke(); ctx.fillText(v.toFixed(1), pl-6, Y(v)); }
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillText('Re(Mω)', pl+pw/2, H-4);
+      ctx.save(); ctx.translate(12, pt+ph/2); ctx.rotate(-Math.PI/2); ctx.fillText('−Im(Mω)', 0, 0); ctx.restore();
+      const L = tok('--left'), R = tok('--right');
+      GR.forEach(([re,im], n) => {
+        const ar = re + SH[n][0]*c, ai = im + SH[n][1]*c;
+        ctx.strokeStyle = R; ctx.globalAlpha = .45; ctx.setLineDash([3,3]);
+        ctx.beginPath(); ctx.moveTo(X(re),Y(im)); ctx.lineTo(X(ar),Y(ai)); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+        ctx.fillStyle = L; ctx.beginPath(); ctx.arc(X(re),Y(im),5.5,0,2*Math.PI); ctx.fill();
+        ctx.strokeStyle = R; ctx.lineWidth = 2; ctx.fillStyle = tok('--surface');
+        ctx.beginPath(); ctx.arc(X(ar),Y(ai),5.5,0,2*Math.PI); ctx.fill(); ctx.stroke(); ctx.lineWidth = 1;
+        ctx.fillStyle = tok('--muted'); ctx.textAlign = 'left';
+        ctx.fillText('n=' + n, X(re)+9, Y(im)+4);
+      });
+    }
+    sl.addEventListener('input', () => { out.value = (sl.value/100).toFixed(2); draw(); });
+    addEventListener('resize', () => { size(); draw(); });
+    redrawers.push(draw);
+    size(); draw();
+  })();
+
+  /* ---------- paper thumbnails ---------- */
+  (function(){
+    const cvs = [...document.querySelectorAll('canvas[data-kind]')];
+    function draw(cv){
+      const ctx = cv.getContext('2d'), W = cv.width, H = cv.height, L = tok('--left'), R = tok('--right'), M = tok('--muted');
+      ctx.clearRect(0,0,W,H); ctx.lineWidth = 3; ctx.lineCap = 'round';
+      const k = cv.dataset.kind;
+      if (k === 'biref'){
+        [[L,-1],[R,1]].forEach(([c,s]) => { ctx.strokeStyle = c; ctx.beginPath();
+          for (let x = 14; x <= W-14; x += 2){ const u = (x-14)/(W-28), a = 22*Math.exp(s*1.1*u); const y = H/2 - a*Math.sin(u*5.5*Math.PI + (s>0?1.2:0)); x===14?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke(); });
+      } else if (k === 'barrier'){
+        ctx.strokeStyle = M; ctx.beginPath();
+        for (let x = 10; x <= W-10; x += 2){ const u = (x-W*0.45)/22; const y = H*0.8 - 80/Math.cosh(u)**2; x===10?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke();
+        ctx.strokeStyle = R; ctx.beginPath();
+        for (let x = 10; x <= W-10; x += 2){ const u = (x-W*0.45)/40; const y = H*0.45 - 14*Math.sin(x/7)*Math.exp(-u*u*0.25)*(x < W*0.45 ? 1 : 0.55); x===10?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke();
+      } else if (k === 'breather'){
+        [[L,1],[R,-0.55]].forEach(([c,ph]) => { ctx.strokeStyle = c; ctx.beginPath();
+          for (let x = 10; x <= W-10; x += 2){ const u = (x-W/2)/26; const y = H/2 - 52*ph/Math.cosh(u); x===10?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke(); });
+        ctx.strokeStyle = M; ctx.lineWidth = 1.5; ctx.setLineDash([4,5]); ctx.beginPath(); ctx.moveTo(10,H/2); ctx.lineTo(W-10,H/2); ctx.stroke(); ctx.setLineDash([]);
+      } else if (k === 'greybody'){
+        ctx.strokeStyle = M; ctx.lineWidth = 1.5; ctx.setLineDash([4,5]);
+        ctx.beginPath(); ctx.moveTo(14,H*0.18); ctx.lineTo(W-14,H*0.18); ctx.stroke(); ctx.setLineDash([]); ctx.lineWidth = 3;
+        [[L,-0.07],[R,0.07]].forEach(([c,sh]) => { ctx.strokeStyle = c; ctx.beginPath();
+          for (let x = 14; x <= W-14; x += 2){ const u = (x-14)/(W-28); const G = 1/(1+Math.exp(-(u-0.5-sh)*12)); const y = H*0.82 - G*(H*0.64); x===14?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke(); });
+      } else if (k === 'pulsar'){
+        const cx = W*0.32, cy = H/2;
+        ctx.strokeStyle = M; ctx.lineWidth = 2;
+        [26,44,62].forEach((r,i) => { ctx.globalAlpha = 0.8 - i*0.22; ctx.strokeStyle = i%2 ? R : L; ctx.beginPath(); ctx.arc(cx,cy,r+24,-0.9,0.9); ctx.stroke(); });
+        ctx.globalAlpha = 1; ctx.fillStyle = tok('--fg'); ctx.beginPath(); ctx.arc(cx,cy,14,0,2*Math.PI); ctx.fill();
+        ctx.strokeStyle = tok('--fg'); ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx-10,cy-40); ctx.lineTo(cx+10,cy+40); ctx.stroke();
+      }
+    }
+    const all = () => cvs.forEach(draw);
+    redrawers.push(all); all();
+  })();
+
+  /* ---------- publication filters ---------- */
+  (function(){
+    const chips = [...document.querySelectorAll('.fchip')];
+    const lists = [['pubs-main','empty-main',null],['pubs-pre',null,'pre-head']];
+    chips.forEach(ch => ch.addEventListener('click', () => {
+      chips.forEach(c => c.setAttribute('aria-pressed', c === ch));
+      const f = ch.dataset.f;
+      lists.forEach(([id, emptyId, headId]) => {
+        const items = [...document.getElementById(id).children]; let shown = 0;
+        items.forEach(li => { const on = f === 'all' || li.dataset.t.split(' ').includes(f); li.hidden = !on; if (on) shown++; });
+        if (emptyId) document.getElementById(emptyId).hidden = shown > 0;
+        if (headId){ document.getElementById(headId).hidden = shown === 0; document.getElementById(id).hidden = shown === 0; }
+      });
+    }));
+  })();
+
+  /* ---------- copy buttons ---------- */
+  function copyText(btn, text, selectEl){
+    const label = btn.textContent;
+    const done = () => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = label, 1500); };
+    const sel = () => { const r = document.createRange(); r.selectNodeContents(selectEl); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, press Ctrl+C'; setTimeout(() => btn.textContent = label, 2500); };
+    try { navigator.clipboard.writeText(text).then(done, sel); } catch(e){ sel(); }
+  }
+  document.querySelectorAll('.copy[data-copy]').forEach(b => b.addEventListener('click', () => copyText(b, b.dataset.copy, b.previousElementSibling)));
+  document.querySelectorAll('.copy[data-bib]').forEach(b => b.addEventListener('click', () => { const pre = b.closest('details').querySelector('pre'); copyText(b, pre.textContent, pre); }));
+
+  if (document.fonts) document.fonts.ready.then(() => dispatchEvent(new Event('resize')));
+})();
+</script>
+</body></html>
