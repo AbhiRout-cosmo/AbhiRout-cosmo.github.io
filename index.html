@@ -291,6 +291,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
         <h2>Recently</h2>
       </div>
       <ol class="news rise">
+        <li><time datetime="2026-10">Oct 2026</time><div class="ev"><span class="badge pre">Preprint</span>Isospectrality breaking in the axial quasinormal modes of Reissner–Nordström black holes in dynamical Chern–Simons gravity, submitted to <em>Physical Review D</em>. <a href="https://arxiv.org/abs/2610.38742" target="_blank" rel="noopener">arXiv:2610.38742</a></div></li>
         <li><time datetime="2026-10">Oct 2026</time><div class="ev"><span class="badge pre">Preprint</span>Analytic parity-violating greybody factors of a dynamical Chern–Simons black hole, submitted to <em>General Relativity and Gravitation</em>. <a href="https://arxiv.org/abs/2610.10280" target="_blank" rel="noopener">arXiv:2610.10280</a></div></li>
         <li><time datetime="2026-08">Aug 2026</time><div class="ev"><span class="badge pre">Preprint</span>Parity-violating gravitational-wave strain from pulsar glitches in Chern–Simons gravity, submitted to <em>Physical Review D</em>. <a href="https://arxiv.org/abs/2608.24002" target="_blank" rel="noopener">arXiv:2608.24002</a></div></li>
         <li><time datetime="2026-04">Apr 2026</time><div class="ev"><span class="badge pub">Published</span>Axial perturbations of the Reissner–Nordström metric against a parity-violating gravity background, in <em>Symmetry</em>.</div></li>
@@ -369,7 +370,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
             <p class="kicker">Interactive</p>
             <h3>Breaking isospectrality</h3>
             <p id="qnm-cap">In general relativity, the axial and polar perturbations of a black hole share one spectrum of ringing frequencies. A parity-violating coupling acts on the axial sector, so as it grows the axial modes drift away from their polar partners. Measuring that split in a ringdown signal would be a direct test of parity in gravity.</p>
-            <p class="muted" style="font-size:.88rem">The anchor points are the Schwarzschild ℓ = 2 overtones <span class="m"><i>n</i> = 0, 1, 2</span> in units of <span class="m"><i>M</i></span>. The drift is illustrative, not a computed result.</p>
+            <p class="muted" style="font-size:.88rem">The anchor points are the Schwarzschild ℓ = 2 overtones <span class="m"><i>n</i> = 0, 1, 2</span> in units of <span class="m"><i>M</i></span>. The drift is illustrative, not a computed result. For the Reissner–Nordström calculation, see <a href="https://arxiv.org/abs/2610.38742" target="_blank" rel="noopener">arXiv:2610.38742</a>.</p>
           </div>
         </div>
       </div>
@@ -469,6 +470,27 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
 
         <p class="kicker sub" id="pre-head">Preprints</p>
         <ol class="pubs" id="pubs-pre">
+          <li data-t="cs bh">
+            <span class="thumb"><canvas data-kind="qnmsplit" width="176" height="176"></canvas></span>
+            <div>
+              <h3>Isospectrality Breaking in the Axial Quasinormal Modes of Reissner–Nordström Black Holes in Dynamical Chern–Simons Gravity</h3>
+              <p class="authors"><b>A. Rout</b></p>
+              <p class="venue">Submitted to <em>Physical Review D</em> (2026)</p>
+              <p class="brief"><strong>In brief:</strong> How the dynamical Chern–Simons coupling acts on the axial quasinormal modes of a charged black hole, splitting them from the polar spectrum that general relativity keeps identical.</p>
+              <div class="tags">
+                <a class="tag" href="https://arxiv.org/abs/2610.38742" target="_blank" rel="noopener">arXiv:2610.38742</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@misc{Rout:2026isospectral,
+  author        = {Rout, Abhishek},
+  title         = {Isospectrality Breaking in the Axial Quasinormal Modes of {Reissner--Nordstr\"om} Black Holes in Dynamical {Chern--Simons} Gravity},
+  year          = {2026},
+  eprint        = {2610.38742},
+  archivePrefix = {arXiv},
+  primaryClass  = {gr-qc},
+  note          = {Submitted to Phys. Rev. D}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
           <li data-t="cs bh qft">
             <span class="thumb"><canvas data-kind="greybody" width="176" height="176"></canvas></span>
             <div>
@@ -514,7 +536,6 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
         <p class="kicker sub">In preparation</p>
         <ul class="prep">
           <li>Mixed-order parity-violating corrections to rotating black holes in combined scalar–Gauss–Bonnet and dynamical Chern–Simons gravity</li>
-          <li>Isospectrality breaking in the axial quasinormal modes of Reissner–Nordström black holes in dynamical Chern–Simons gravity</li>
           <li>Rotation-induced isospectrality breaking of charged black holes in dynamical Chern–Simons gravity</li>
         </ul>
         <p class="prep-note muted">All with B. Altschul.</p>
@@ -824,6 +845,16 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
         ctx.beginPath(); ctx.moveTo(14,H*0.18); ctx.lineTo(W-14,H*0.18); ctx.stroke(); ctx.setLineDash([]); ctx.lineWidth = 3;
         [[L,-0.07],[R,0.07]].forEach(([c,sh]) => { ctx.strokeStyle = c; ctx.beginPath();
           for (let x = 14; x <= W-14; x += 2){ const u = (x-14)/(W-28); const G = 1/(1+Math.exp(-(u-0.5-sh)*12)); const y = H*0.82 - G*(H*0.64); x===14?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke(); });
+      } else if (k === 'qnmsplit'){
+        ctx.strokeStyle = M; ctx.lineWidth = 1.5; ctx.setLineDash([4,5]);
+        ctx.beginPath(); ctx.moveTo(18,H*0.14); ctx.lineTo(18,H-18); ctx.lineTo(W-14,H-18); ctx.stroke(); ctx.setLineDash([]);
+        [[0.70,0.25],[0.60,0.50],[0.48,0.74]].forEach(([u,v]) => {
+          const px = 14+u*(W-28), py = v*H, qx = px - W*0.11, qy = py + H*0.07;
+          ctx.strokeStyle = R; ctx.globalAlpha = .5; ctx.lineWidth = 2; ctx.setLineDash([3,4]);
+          ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(qx,qy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+          ctx.fillStyle = L; ctx.beginPath(); ctx.arc(px,py,8,0,2*Math.PI); ctx.fill();
+          ctx.lineWidth = 3; ctx.strokeStyle = R; ctx.fillStyle = tok('--surface'); ctx.beginPath(); ctx.arc(qx,qy,8,0,2*Math.PI); ctx.fill(); ctx.stroke();
+        });
       } else if (k === 'pulsar'){
         const cx = W*0.32, cy = H/2;
         ctx.strokeStyle = M; ctx.lineWidth = 2;
