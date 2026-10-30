@@ -95,6 +95,15 @@ figure.fig{margin:0;background:var(--surface);border:1px solid var(--line);borde
 figure.fig canvas{display:block;width:100%;height:auto;max-width:100%}
 #rings{aspect-ratio:16/9}
 #qnm{aspect-ratio:16/10}
+#shadow{aspect-ratio:16/10}
+.feature.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+@media (max-width:860px){.feature.flip{grid-template-columns:minmax(0,1fr)}.feature.flip .copy-col{order:2}}
+.ctrl3{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.45rem .75rem;align-items:center;margin-top:.75rem;font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.ctrl3 input{width:100%;accent-color:var(--right)}
+.ctrl3 output{min-width:3.4em;text-align:right;font-variant-numeric:tabular-nums;color:var(--fg)}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin-top:.75rem;font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.readout b{display:block;font-weight:500;font-size:.95rem;color:var(--fg);font-variant-numeric:tabular-nums}
+@media (max-width:420px){.readout{grid-template-columns:minmax(0,1fr)}}
 .legend{display:flex;flex-wrap:wrap;gap:var(--s2);font-family:var(--f-mono);font-size:.78rem;color:var(--muted);margin-top:.5rem}
 .legend span{display:inline-flex;align-items:center;gap:.4rem}
 .legend b{display:inline-block;width:.6rem;height:.6rem;border-radius:50%}
@@ -372,6 +381,35 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
             <p id="qnm-cap">In general relativity, the axial and polar perturbations of a black hole share one spectrum of ringing frequencies. A parity-violating coupling acts on the axial sector, so as it grows the axial modes drift away from their polar partners. Measuring that split in a ringdown signal would be a direct test of parity in gravity.</p>
             <p class="muted" style="font-size:.88rem">The anchor points are the Schwarzschild ℓ = 2 overtones <span class="m"><i>n</i> = 0, 1, 2</span> in units of <span class="m"><i>M</i></span>. The drift is illustrative, not a computed result. For the Reissner–Nordström calculation, see <a href="https://arxiv.org/abs/2610.38742" target="_blank" rel="noopener">arXiv:2610.38742</a>.</p>
           </div>
+        </div>
+
+        <div class="feature flip rise">
+          <div class="copy-col">
+            <p class="kicker">Interactive</p>
+            <h3>The shadow of a spinning dCS black hole</h3>
+            <p id="shadow-cap">A non-spinning black hole looks the same in dynamical Chern–Simons gravity as in general relativity, because the Pontryagin density vanishes on Schwarzschild. Spin switches the scalar field on, and it weakens frame dragging. A spinning black hole's shadow is displaced toward one side by frame dragging, so in dCS it sits a little closer to centre than its Kerr counterpart.</p>
+            <p>To first order in spin, the shadow is a circle of radius <span class="m">3√3 <i>M</i></span> whose centre is displaced by</p>
+            <span class="mblock"><i>α</i><sub>c</sub> = <i>a</i> sin <i>θ</i><sub>o</sub> ( 2 − <span class="frac"><span>131</span><span>3024</span></span> <i>ζ</i> )</span>
+            <p class="muted" style="font-size:.88rem;margin-top:.75rem">Computed from the photon-orbit conditions of the Yunes–Pretorius slow-rotation metric, with <span class="m"><i>ζ</i> = <i>ξ</i>/<i>M</i><sup>4</sup></span>. The metric is only valid for small spin and <span class="m"><i>ζ</i> ≪ 1</span>. Real black holes have far smaller <span class="m"><i>ζ</i></span>. The inset zooms in on the prograde edge, where the two shadows separate.</p>
+          </div>
+          <figure class="fig" aria-labelledby="shadow-cap">
+            <canvas id="shadow" role="img" aria-label="Black hole shadow in dynamical Chern–Simons gravity compared with the Kerr shadow, with a magnified inset of the prograde edge"></canvas>
+            <div class="legend">
+              <span><b style="background:var(--right)"></b>dCS</span>
+              <span><b style="background:var(--left)"></b>Kerr</span>
+              <span><b style="background:var(--muted)"></b>Schwarzschild</span>
+            </div>
+            <div class="ctrl3">
+              <label for="sh-a">spin a/M</label><input id="sh-a" type="range" min="0" max="30" value="25"><output id="sh-a-out" for="sh-a">0.25</output>
+              <label for="sh-z">coupling ζ</label><input id="sh-z" type="range" min="0" max="100" value="60"><output id="sh-z-out" for="sh-z">0.60</output>
+              <label for="sh-i">inclination θ<sub>o</sub></label><input id="sh-i" type="range" min="0" max="90" value="90"><output id="sh-i-out" for="sh-i">90°</output>
+            </div>
+            <div class="readout" aria-live="polite">
+              <div>Kerr centre<b id="ro-k">0.500 M</b></div>
+              <div>dCS centre<b id="ro-d">0.493 M</b></div>
+              <div>difference<b id="ro-x">−1.3%</b></div>
+            </div>
+          </figure>
         </div>
       </div>
     </div>
@@ -816,6 +854,73 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
       });
     }
     sl.addEventListener('input', () => { out.value = (sl.value/100).toFixed(2); draw(); });
+    addEventListener('resize', () => { size(); draw(); });
+    redrawers.push(draw);
+    size(); draw();
+  })();
+
+  /* ---------- dCS shadow figure (slow rotation, O(a)) ---------- */
+  (function(){
+    const cv = document.getElementById('shadow');
+    const sa = document.getElementById('sh-a'), sz = document.getElementById('sh-z'), si = document.getElementById('sh-i');
+    const oa = document.getElementById('sh-a-out'), oz = document.getElementById('sh-z-out'), oi = document.getElementById('sh-i-out');
+    const rk = document.getElementById('ro-k'), rd = document.getElementById('ro-d'), rx = document.getElementById('ro-x');
+    const RS = Math.sqrt(27);
+    let g;
+    const size = () => { g = fit(cv, 10/16); };
+    function draw(){
+      const {ctx, W, H} = g; ctx.clearRect(0,0,W,H);
+      const a = sa.value/100, z = sz.value/100, th = si.value*Math.PI/180, s = Math.sin(th);
+      const cK = 2*a*s, cD = a*s*(2 - 131*z/3024);
+      oa.value = a.toFixed(2); oz.value = z.toFixed(2); oi.value = si.value + '°';
+      rk.textContent = cK.toFixed(3) + ' M'; rd.textContent = cD.toFixed(3) + ' M';
+      rx.textContent = cK > 0 ? ((cD/cK - 1)*100).toFixed(1).replace('-', '−') + '%' : '—';
+      const L = tok('--left'), R = tok('--right'), M = tok('--muted'), FG = tok('--fg'), GR = tok('--grid'), SF = tok('--surface');
+      // main panel: alpha in [-7.5, 7.5]
+      const side = Math.min(H, W*0.58), ox = 0, oy = (H-side)/2, sc = side/17;
+      const X = v => ox + side/2 + v*sc, Y = v => oy + side/2 - v*sc;
+      ctx.strokeStyle = GR; ctx.lineWidth = 1;
+      for (let v = -6; v <= 6; v += 2){ ctx.beginPath(); ctx.moveTo(X(v),Y(-7)); ctx.lineTo(X(v),Y(7)); ctx.stroke(); ctx.beginPath(); ctx.moveTo(X(-7),Y(v)); ctx.lineTo(X(7),Y(v)); ctx.stroke(); }
+      ctx.fillStyle = M; ctx.font = '10px "JetBrains Mono", ui-monospace, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      [-6,-3,0,3,6].forEach(v => ctx.fillText(String(v).replace('-','−'), X(v), Y(-7)+3));
+      ctx.textAlign = 'left'; ctx.fillText('α/M', X(7)+3, Y(-7)+3); ctx.textAlign = 'center';
+      // photon ring glow + dCS shadow
+      const glow = ctx.createRadialGradient(X(cD),Y(0),RS*sc*0.92,X(cD),Y(0),RS*sc*1.25);
+      glow.addColorStop(0,'transparent'); glow.addColorStop(0.18, R); glow.addColorStop(1,'transparent');
+      ctx.globalAlpha = .35; ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(X(cD),Y(0),RS*sc*1.25,0,2*Math.PI); ctx.fill(); ctx.globalAlpha = 1;
+      ctx.fillStyle = '#05070a'; ctx.beginPath(); ctx.arc(X(cD),Y(0),RS*sc,0,2*Math.PI); ctx.fill();
+      ctx.strokeStyle = R; ctx.lineWidth = 2; ctx.stroke();
+      // Schwarzschild + Kerr outlines
+      ctx.strokeStyle = M; ctx.lineWidth = 1; ctx.setLineDash([2,4]); ctx.beginPath(); ctx.arc(X(0),Y(0),RS*sc,0,2*Math.PI); ctx.stroke();
+      ctx.strokeStyle = L; ctx.lineWidth = 1.5; ctx.setLineDash([6,4]); ctx.beginPath(); ctx.arc(X(cK),Y(0),RS*sc,0,2*Math.PI); ctx.stroke(); ctx.setLineDash([]);
+      // centre ticks
+      [[0,M],[cK,L],[cD,R]].forEach(([c,col]) => { ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(X(c),Y(0.35)); ctx.lineTo(X(c),Y(-0.35)); ctx.stroke(); });
+      // zoom window marker on prograde (left) edge
+      const eK = cK - RS, eD = cD - RS, mid = (eK+eD)/2, half = 0.03;
+      ctx.strokeStyle = FG; ctx.lineWidth = 1; ctx.strokeRect(X(mid)-6, Y(0)-6, 12, 12);
+      // inset
+      const ix = side + 18, iw = W - ix - 6, iy = 10, ih = H - 34;
+      if (iw > 60){
+        ctx.fillStyle = SF; ctx.strokeStyle = tok('--line'); ctx.lineWidth = 1; ctx.fillRect(ix,iy,iw,ih); ctx.strokeRect(ix,iy,iw,ih);
+        ctx.beginPath(); ctx.moveTo(X(mid)+6, Y(0)-6); ctx.lineTo(ix, iy); ctx.moveTo(X(mid)+6, Y(0)+6); ctx.lineTo(ix, iy+ih); ctx.strokeStyle = GR; ctx.stroke();
+        const zs = iw/(2*half), IX = v => ix + iw/2 + (v-mid)*zs, IY = v => iy + ih/2 - v*zs;
+        ctx.save(); ctx.beginPath(); ctx.rect(ix,iy,iw,ih); ctx.clip();
+        // dCS interior shading (right of dCS edge)
+        ctx.fillStyle = '#05070a'; ctx.beginPath();
+        for (let k = 0; k <= 60; k++){ const b = (k/60-0.5)*ih/zs; const al = cD - Math.sqrt(RS*RS - b*b); k ? ctx.lineTo(IX(al), IY(b)) : ctx.moveTo(IX(al), IY(b)); }
+        ctx.lineTo(ix+iw, iy); ctx.lineTo(ix+iw, iy+ih); ctx.closePath(); ctx.fill();
+        const edge = (c,col,dash,w) => { ctx.strokeStyle = col; ctx.lineWidth = w; ctx.setLineDash(dash); ctx.beginPath();
+          for (let k = 0; k <= 60; k++){ const b = (k/60-0.5)*ih/zs; const al = c - Math.sqrt(RS*RS - b*b); k ? ctx.lineTo(IX(al), IY(b)) : ctx.moveTo(IX(al), IY(b)); } ctx.stroke(); ctx.setLineDash([]); };
+        edge(cD, R, [], 2); edge(cK, L, [6,4], 1.5);
+        ctx.restore();
+        // scale bar 0.01 M
+        const sb = 0.01*zs; ctx.strokeStyle = FG; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(ix+10, iy+ih-14); ctx.lineTo(ix+10+sb, iy+ih-14); ctx.stroke();
+        ctx.fillStyle = tok('--muted'); ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillText('0.01 M', ix+10, iy+ih-18);
+        ctx.textBaseline = 'top'; { const t = 'prograde edge ×' + Math.round(zs/sc), tw = ctx.measureText(t).width; ctx.fillStyle = SF; ctx.fillRect(ix+1, iy+1, tw+10, 16); ctx.fillStyle = tok('--muted'); ctx.fillText(t, ix+6, iy+5); }
+      }
+    }
+    [sa,sz,si].forEach(el => el.addEventListener('input', draw));
     addEventListener('resize', () => { size(); draw(); });
     redrawers.push(draw);
     size(); draw();
