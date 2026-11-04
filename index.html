@@ -300,6 +300,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
         <h2>Recently</h2>
       </div>
       <ol class="news rise">
+        <li><time datetime="2026-11">Nov 2026</time><div class="ev"><span class="badge pre">Preprint</span>Mixed-order parity-violating corrections to rotating black holes in combined scalar–Gauss–Bonnet and dynamical Chern–Simons gravity, submitted to <em>Physical Review D</em>. <a href="https://arxiv.org/abs/2611.04945" target="_blank" rel="noopener">arXiv:2611.04945</a></div></li>
         <li><time datetime="2026-10">Oct 2026</time><div class="ev"><span class="badge pre">Preprint</span>Isospectrality breaking in the axial quasinormal modes of Reissner–Nordström black holes in dynamical Chern–Simons gravity, submitted to <em>Physical Review D</em>. <a href="https://arxiv.org/abs/2610.38742" target="_blank" rel="noopener">arXiv:2610.38742</a></div></li>
         <li><time datetime="2026-10">Oct 2026</time><div class="ev"><span class="badge pre">Preprint</span>Analytic parity-violating greybody factors of a dynamical Chern–Simons black hole, submitted to <em>General Relativity and Gravitation</em>. <a href="https://arxiv.org/abs/2610.10280" target="_blank" rel="noopener">arXiv:2610.10280</a></div></li>
         <li><time datetime="2026-08">Aug 2026</time><div class="ev"><span class="badge pre">Preprint</span>Parity-violating gravitational-wave strain from pulsar glitches in Chern–Simons gravity, submitted to <em>Physical Review D</em>. <a href="https://arxiv.org/abs/2608.24002" target="_blank" rel="noopener">arXiv:2608.24002</a></div></li>
@@ -513,6 +514,27 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
         <p class="kicker sub" id="pre-head">Preprints</p>
         <ol class="pubs" id="pubs-pre">
           <li data-t="cs bh">
+            <span class="thumb"><canvas data-kind="mixed" width="176" height="176"></canvas></span>
+            <div>
+              <h3>Mixed-Order Parity-Violating Corrections to Rotating Black Holes in Combined Scalar–Gauss–Bonnet and Dynamical Chern–Simons Gravity</h3>
+              <p class="authors"><b>A. Rout</b> and B. Altschul</p>
+              <p class="venue">Submitted to <em>Physical Review D</em> (2026)</p>
+              <p class="brief"><strong>In brief:</strong> Rotating black holes in a theory with both scalar–Gauss–Bonnet and dynamical Chern–Simons couplings, and the parity-violating corrections that come from the two acting together.</p>
+              <div class="tags">
+                <a class="tag" href="https://arxiv.org/abs/2611.04945" target="_blank" rel="noopener">arXiv:2611.04945</a>
+                <details class="bib"><summary class="tag">BibTeX</summary><pre>@misc{Rout:2026mixed,
+  author        = {Rout, Abhishek and Altschul, Brett},
+  title         = {Mixed-Order Parity-Violating Corrections to Rotating Black Holes in Combined Scalar--{Gauss--Bonnet} and Dynamical {Chern--Simons} Gravity},
+  year          = {2026},
+  eprint        = {2611.04945},
+  archivePrefix = {arXiv},
+  primaryClass  = {gr-qc},
+  note          = {Submitted to Phys. Rev. D}
+}</pre><div class="bibbar"><button class="copy" type="button" data-bib>Copy BibTeX</button></div></details>
+              </div>
+            </div>
+          </li>
+          <li data-t="cs bh">
             <span class="thumb"><canvas data-kind="qnmsplit" width="176" height="176"></canvas></span>
             <div>
               <h3>Isospectrality Breaking in the Axial Quasinormal Modes of Reissner–Nordström Black Holes in Dynamical Chern–Simons Gravity</h3>
@@ -577,10 +599,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
 
         <p class="kicker sub">In preparation</p>
         <ul class="prep">
-          <li>Mixed-order parity-violating corrections to rotating black holes in combined scalar–Gauss–Bonnet and dynamical Chern–Simons gravity</li>
-          <li>Rotation-induced isospectrality breaking of charged black holes in dynamical Chern–Simons gravity</li>
+          <li>Rotation-induced isospectrality breaking of charged black holes in dynamical Chern–Simons gravity <span class="muted">(with B. Altschul)</span></li>
+          <li>Quasinormal-mode-driven pseudoscalar radiation in dynamical Chern–Simons ringdown <span class="muted">(single author)</span></li>
+          <li>Parity-violating spherical photon and timelike orbits in dynamical Chern–Simons gravity: a non-degenerate, sector-separating discriminator from linear to quadratic order in spin <span class="muted">(with B. Altschul)</span></li>
         </ul>
-        <p class="prep-note muted">All with B. Altschul.</p>
         <p class="more muted">Full list: <a href="https://inspirehep.net/authors/3132273" target="_blank" rel="noopener">INSPIRE-HEP</a> · <a href="https://scholar.google.com/citations?user=tL6HqTIAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a> · <a href="Rout_Abhishek_Publications.pdf" target="_blank" rel="noopener">publication list (PDF)</a> · <a href="https://www.researchgate.net/profile/Abhishek-Rout-4/publications" target="_blank" rel="noopener">ResearchGate</a></p>
       </div>
     </div>
@@ -967,6 +989,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(-
           ctx.fillStyle = L; ctx.beginPath(); ctx.arc(px,py,8,0,2*Math.PI); ctx.fill();
           ctx.lineWidth = 3; ctx.strokeStyle = R; ctx.fillStyle = tok('--surface'); ctx.beginPath(); ctx.arc(qx,qy,8,0,2*Math.PI); ctx.fill(); ctx.stroke();
         });
+      } else if (k === 'mixed'){
+        const cx = W/2, cy = H/2;
+        ctx.lineWidth = 3; ctx.strokeStyle = L; ctx.beginPath(); ctx.ellipse(cx, cy, 58, 22, 0, Math.PI*1.05, Math.PI*1.95); ctx.stroke();
+        ctx.strokeStyle = R; ctx.beginPath(); ctx.ellipse(cx, cy, 58, 22, 0, Math.PI*0.05, Math.PI*0.95); ctx.stroke();
+        ctx.fillStyle = tok('--fg'); ctx.beginPath(); ctx.arc(cx, cy, 24, 0, 2*Math.PI); ctx.fill();
+        ctx.strokeStyle = M; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx, cy-34); ctx.lineTo(cx, cy-62); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx-6, cy-54); ctx.lineTo(cx, cy-62); ctx.lineTo(cx+6, cy-54); ctx.stroke();
       } else if (k === 'pulsar'){
         const cx = W*0.32, cy = H/2;
         ctx.strokeStyle = M; ctx.lineWidth = 2;
